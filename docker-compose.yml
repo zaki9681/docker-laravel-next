@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  # laravel
+  test_laravel:
+    container_name: test_larevel
+    build:
+      context: .
+      dockerfile: ./docker/php/dockerfile
+    tty: true
+    ports:
+      - 5173:5173
+    volumes:
+      - ./docker/src/test_laravel:/var/www
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+  # nginx
+  test_nginx:
+    container_name: test_nginx
+    build: ./docker/nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./docker/src/test_laravel:/var/wwww
+  #node
+  test_node:
+    container_name: test_node
+    build: ./docker/node
+    tty: true
+    ports:
+      - 3000:3000
+    volumes:
+      - ./docker/src/test_node:/usr/src/app
+    command: sh -c "npm run start"
+  # DB
+  test_mariadb:
+    container_name: test_mariadb
+    image: mariadb:10.5.4
+    environment:
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWORD
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+  test_phpmyadmin:
+    container_name: test_phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: test_mariadb
+    depends_on:
+      - test_mariadb
+    ports:
+      - 8080:80
+    volumes:
+      - /sessions
