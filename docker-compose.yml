@@ -2,34 +2,36 @@ version: '3'
 
 services:
   # laravel
-  test_laravel:
+  php:
     container_name: test_larevel
     build:
       context: .
-      dockerfile: ./docker/php/dockerfile
+      dockerfile: ./docker/php/Dockerfile
     tty: true
     ports:
       - 5173:5173
     volumes:
-      - ./docker/src/test_laravel:/var/www
+      - ./docker/src/laravel:/var/www
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini
   # nginx
   test_nginx:
-    container_name: test_nginx
-    build: ./docker/nginx
+    image: nginx:latest
     ports:
-      - 80:80
+      - 8000:80
     volumes:
-      - ./docker/src/test_laravel:/var/wwww
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/src/laravel:/var/www/html
+    depends_on:
+      - php
   #node
   test_node:
-    container_name: test_node
+    container_name: node
     build: ./docker/node
     tty: true
     ports:
-      - 3000:3000
+      - 80:3000
     volumes:
-      - ./docker/src/test_node:/usr/src/app
+      - ./docker/src/react:/usr/src/app
     command: sh -c "npm run start"
   # DB
   test_mariadb:
