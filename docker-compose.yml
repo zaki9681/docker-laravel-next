@@ -31,8 +31,8 @@ services:
     ports:
       - 80:3000
     volumes:
-      - ./docker/src/react:/usr/src/app
-    command: sh -c "npm run start"
+      - ./docker/src/next:/usr/src/app
+    # command: sh -c "npm run start"
   # DB
   test_mariadb:
     container_name: test_mariadb
