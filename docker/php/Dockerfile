@@ -38,7 +38,7 @@ RUN apt-get update
 RUN apt-get install -y nodejs
 RUN apt-get update
 # connection timed outにならないようにupdateを挟んでる
-RUN apt-get install -y npm
+#RUN apt-get install -y npm
 
 
 # Composerのインストール & パス通す
