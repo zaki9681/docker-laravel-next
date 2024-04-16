@@ -1,3 +1,7 @@
-./docker/db
-./docker/src
+!.gitignore
+docker/db/data.gitkeep
+docker/src
+docker/src/laravel/*
+docker/src/next/*
 .env
+!docker/src/index.php
