@@ -25,7 +25,7 @@ services:
       - test_laravel
   #node
   test_node:
-    container_name: node
+    container_name: test_node
     build: ./docker/node
     tty: true
     ports:
