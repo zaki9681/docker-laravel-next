@@ -1,5 +1,5 @@
 !.gitignore
-docker/db/data.gitkeep
+docker/db/data
 docker/src
 docker/src/laravel/*
 docker/src/next/*
