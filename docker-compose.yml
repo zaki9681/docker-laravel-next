@@ -2,8 +2,8 @@ version: '3'
 
 services:
   # laravel
-  php:
-    container_name: test_larevel
+  test_laravel:
+    container_name: test_laravel
     build:
       context: .
       dockerfile: ./docker/php/Dockerfile
@@ -20,9 +20,9 @@ services:
       - 8000:80
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./docker/src/laravel:/var/www/html
+      - ./docker/src/laravel:/var/www
     depends_on:
-      - php
+      - test_laravel
   #node
   test_node:
     container_name: node
